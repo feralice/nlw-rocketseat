@@ -9,10 +9,13 @@ export function NoteCard(props: NoteCardProps) {
     <Dialog.Root>
       <Dialog.Trigger className="rounded-md text-left bg-slate-800 flex flex-col p-5 gap-3 overflow-hidden relative hover:ring-2 hover:ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400 outline-none">
         <span className="text-sm font-medium text-slate-300">
-          {props.date.toISOString()}
+          {formatDistanceToNow(props.note.date, {
+            locale: ptBR,
+            addSuffix: true,
+          })}{" "}
         </span>
 
-        <p className="text-sm leading-6 text-slate-400">{props.content}</p>
+        <p className="text-sm leading-6 text-slate-400">{props.note.content}</p>
 
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-black/0 pointer-events-none" />
       </Dialog.Trigger>
@@ -26,18 +29,21 @@ export function NoteCard(props: NoteCardProps) {
 
           <div className="flex flex-1 flex-col gap-3 p-5">
             <span className="text-sm font-medium text-slate-300">
-              {formatDistanceToNow(props.date, {
+              {formatDistanceToNow(props.note.date, {
                 locale: ptBR,
                 addSuffix: true,
               })}
             </span>
 
-            <p className="text-sm leading-6 text-slate-400">{props.content}</p>
+            <p className="text-sm leading-6 text-slate-400">
+              {props.note.content}
+            </p>
           </div>
 
           <button
             type="button"
             className="w-full bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none font-medium group"
+            onClick={() => props.onNoteDeleted(props.note.id)}
           >
             Deseja{" "}
             <span className="text-red-400 group-hover:underline">
